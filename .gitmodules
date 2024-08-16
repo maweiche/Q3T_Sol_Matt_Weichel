@@ -4,3 +4,6 @@
 [submodule "nft-staking"]
 	path = nft-staking
 	url = https://github.com/maweiche/nft-staking
+[submodule "hestia_protocol"]
+	path = hestia_protocol
+	url = https://github.com/maweiche/hestia_protocol
