@@ -1,0 +1,6 @@
+[submodule "nft-staking"]
+	path = nft-staking
+	url = https://github.com/maweiche/nft-staking
+[submodule "token-escrow"]
+	path = escrow
+	url = https://github.com/maweiche/escrow
