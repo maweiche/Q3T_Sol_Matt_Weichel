@@ -7,3 +7,6 @@
 [submodule "hestia_protocol"]
 	path = hestia_protocol
 	url = https://github.com/maweiche/hestia_protocol
+[submodule "solana-dice-game"]
+	path = solana-dice-game
+	url = https://github.com/maweiche/solana-dice-game

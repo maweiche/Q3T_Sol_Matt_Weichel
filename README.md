@@ -3,10 +3,8 @@
 <h1 align="center">👋, I'm <a href="https://github.com/maweiche">Matt!</a></h1>
 
 <p align="center">
-    <a href="#">Website</a> •
     <a href="https://github.com/maweiche/maweiche">README</a> •
     <a href="https://mattweichel.xyz">Portfolio</a> •
-    <a href="https://rebbeccaandmatt.com">Blog</a>
 </p>
 
 <div align="center">

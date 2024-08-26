@@ -27,7 +27,8 @@ Food Trucks, Cafes, anyone already using an ipad POS to operate.
     1 - I want to take orders in store and display/update them from the back-of-house.
     1 - I want to add employees to my restaurant who can execute different functions based on their permissions.
 
-    2 - I want to manage my inventory and have it update when an order from the menu is placed
+    2 - I want to manage my inventory 
+    2 - I want my inventory to update when an order is placed
     2 - I want to add/update/remove items from my menu
     2 - I want to offer rewards to be redeemed for free products and be able to airdrop them to users
 
@@ -35,7 +36,7 @@ Food Trucks, Cafes, anyone already using an ipad POS to operate.
 
  <!-- CUSTOMER -->
   As a customer...
-    1 - I want to pay card/crypto, i don't care if it's on the blockchain
+    1 - I want to pay card/crypto
     1 - I want to be able to place a mobile order
     1 - I want to be able to cancel my order
 

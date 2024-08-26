@@ -21,17 +21,6 @@ impl Space for Manager {
 }
 
 #[account]
-pub struct Admin {
-    pub publickey: Pubkey,
-    pub username: String,
-    pub initialized: i64,
-}
-
-impl Space for Admin {
-    const INIT_SPACE: usize = 8 + 32 + 4 + 8;
-}
-
-#[account]
 pub struct AdminProfile {
     pub username: String,
     pub creation_time: i64,
