@@ -16,7 +16,7 @@ umi.use(signerIdentity(signer));
 (async () => {
     try {
         //1. Load image
-        const imageFile = await readFile("./public/generug.png");
+        const imageFile = await readFile("./public/monaco.png");
         //2. Convert image to generic file.
         const genericFile = createGenericFile(imageFile, "image/jpeg");
         //3. Upload image

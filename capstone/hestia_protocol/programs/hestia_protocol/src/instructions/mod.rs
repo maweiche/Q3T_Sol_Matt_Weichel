@@ -9,3 +9,9 @@ pub use restaurant::*;
 
 pub mod customer;
 pub use customer::*;
+
+pub mod employee;
+pub use employee::*;
+
+pub mod rewards;
+pub use rewards::*;

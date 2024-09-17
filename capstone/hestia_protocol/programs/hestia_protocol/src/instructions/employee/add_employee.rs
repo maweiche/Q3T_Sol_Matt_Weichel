@@ -1,6 +1,4 @@
 use anchor_lang::prelude::*;
-use anchor_spl::associated_token::Create;
-use mpl_core::accounts::BaseCollectionV1;
 use crate::{state::{AdminProfile, Manager, Restaurant, Employee, EmployeeType}, errors::SetupError};
 
 #[derive(AnchorDeserialize, AnchorSerialize)]
@@ -9,7 +7,6 @@ pub struct AddEmployeeArgs {
     restaurant: Pubkey,
     employee_type: u8,
     username: String,
-    initialized: bool,
     bump: u8,
 }
 
@@ -19,7 +16,7 @@ pub struct AddEmployee<'info> {
     #[account(
         init,
         payer = restaurant_admin,
-        space = Employee::INIT_SPACE,
+        space = Employee::INIT_SPACE + args.username.len(),
         seeds = [b"employee", restaurant.key().as_ref(), args.wallet.as_ref()],
         bump,
     )] 
@@ -31,11 +28,6 @@ pub struct AddEmployee<'info> {
         bump
     )]
     pub admin_profile: Account<'info, AdminProfile>,
-    #[account(
-        seeds = [b"manager"],
-        bump = manager.bump,
-    )]
-    pub manager: Account<'info, Manager>,
     #[account(
         constraint = restaurant.owner == *restaurant_admin.key,
     )] 
@@ -52,7 +44,7 @@ impl<'info> AddEmployee<'info> {
                 restaurant: args.restaurant,
                 employee_type,
                 username: args.username,
-                initialized: args.initialized,
+                initialized: true,
                 bump
             }
         );

@@ -1,11 +1,9 @@
 use anchor_lang::prelude::*;
-use anchor_spl::associated_token::Create;
-use mpl_core::accounts::BaseCollectionV1;
 use crate::{state::{AdminProfile, MenuCategoryType, Menu, MenuItem, Restaurant, Employee, EmployeeType}, errors::SetupError};
 
 #[derive(AnchorDeserialize, AnchorSerialize)]
 pub struct AddMenuItemArgs {
-    sku: u64,
+    sku: String,
     category: u8,
     name: String,
     price: u64,
@@ -20,8 +18,8 @@ pub struct AddMenuItem<'info> {
     #[account(
         init,
         payer = restaurant_admin,
-        space = MenuItem::INIT_SPACE,
-        seeds = [b"item", restaurant.key().as_ref(), args.sku.to_le_bytes().as_ref()],
+        space = MenuItem::INIT_SPACE + args.sku.len() + args.name.len() + args.description.len() + (args.ingredients.len() * 8),
+        seeds = [b"item", args.sku.as_bytes().as_ref()],
         bump,
     )] 
     pub item: Account<'info, MenuItem>,
