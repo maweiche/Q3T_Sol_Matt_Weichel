@@ -9,7 +9,7 @@ pub use constants::*;
 pub use instructions::*;
 pub use state::*;
 
-declare_id!("93UGwDhoXvZxYuxHq47aWKFcQTgxTM8V55ytPnET1Qjd");
+declare_id!("BfKK2fRqZKyX2qce7UEkKntUCK9BMQR1ozgmitvPQtD2");
 
 #[program]
 pub mod hestia_protocol {
@@ -74,7 +74,9 @@ pub mod hestia_protocol {
     }
 
     // // remove an inventory item -- removes an item from the restaurant's inventory
-    // pub fn restaurant_remove_inventory_item(ctx: Context<Initialize>) -> Result<()> {}
+    pub fn restaurant_remove_inventory_item(ctx: Context<RemoveInventory>) -> Result<()> {
+        instructions::remove_inventory::handler(ctx)
+    }
 
     // // add menu item -- adds an item to the restaurant's menu, category based on enum
     pub fn restaurant_add_menu_item(ctx: Context<AddMenuItem>, args: AddMenuItemArgs) -> Result<()> {
@@ -82,34 +84,43 @@ pub mod hestia_protocol {
     }
 
     // // update a menu item -- updates an item in the restaurant's menu
-    // pub fn restaurant_update_menu_item(ctx: Context<Initialize>) -> Result<()> {}
+    pub fn restaurant_update_menu_item(ctx: Context<UpdateMenuItem>, args: UpdateMenuItemArgs) -> Result<()> {
+        instructions::update_menu_item::handler(ctx, args)
+    }
 
     // // toggle a menu item -- removes an item from the restaurant's menu
     pub fn restaurant_toggle_menu_item(ctx: Context<ToggleMenuItem>, args: ToggleMenuItemArgs) -> Result<()> {
         instructions::toggle_menu_item::handler(ctx, args)
     }
 
+    // // create reward -- creates reward account an award voucher account can be created from
+    pub fn restaurant_create_reward(ctx: Context<CreateReward>, args: CreateRewardArgs) -> Result<()> {
+        instructions::create_reward::handler(ctx, args)
+    }
+
     // // add reward -- adds a reward to the restaurant's rewards
-    // pub fn restaurant_add_reward(ctx: Context<Initialize>) -> Result<()> {}
+    pub fn restaurant_add_reward(ctx: Context<AddRewardVoucher>, args: AddRewardVoucherArgs) -> Result<()> {
+        instructions::add_reward::handler(ctx, args)
+    }
 
     // // remove reward -- removes a reward from the restaurant's rewards
-    // pub fn restaurant_remove_reward(ctx: Context<Initialize>) -> Result<()> {}
-
-    // // add customer -- adds a customer to the restaurant's customer list
-    // pub fn restaurant_add_customer(ctx: Context<Initialize>) -> Result<()> {}
+    pub fn restaurant_remove_reward(ctx: Context<RemoveRewardVoucher>) -> Result<()> {
+        instructions::remove_reward::handler(ctx)
+    }
    
     // // update order -- updates an order in the restaurant's order list
-    // pub fn restaurant_update_order(ctx: Context<Initialize>) -> Result<()> {}
-
-    // // close order -- closes an order in the restaurant's order list
-    // pub fn restaurant_close_order(ctx: Context<Initialize>) -> Result<()> {}
+    pub fn restaurant_update_order(ctx: Context<UpdateCustomerOrder>, args: UpdateOrderArgs) -> Result<()> {
+        instructions::update_order::handler(ctx, args)
+    }
 
     // //////////////////////////////////////////////////////////////
     // //////////////////CUSTOMER FUNCTIONS/////////////////////////
     // ////////////////////////////////////////////////////////////
 
     // // buy reward -- allows a customer to buy a reward
-    // pub fn customer_buy_reward(ctx: Context<Initialize>) -> Result<()> {}
+    pub fn customer_buy_reward(ctx: Context<BuyRewardVoucher>, uri: String) -> Result<()> {
+        instructions::buy_reward::handler(ctx, uri)
+    }
 
     // // add order -- adds an order to the restaurant's order list
     pub fn restaurant_add_order(ctx: Context<AddCustomerOrder>, args: CustomerOrderArgs) -> Result<()> {
@@ -117,7 +128,7 @@ pub mod hestia_protocol {
     }
 
     // // cancel order -- cancels an order in the restaurant's order list
-    pub fn restaurant_cancel_order(ctx: Context<DeleteCustomerOrder>, args: DeleteOrderArgs) -> Result<()> {
-        instructions::cancel_order::handler(ctx, args)
+    pub fn restaurant_cancel_order(ctx: Context<DeleteCustomerOrder>) -> Result<()> {
+        instructions::cancel_order::handler(ctx)
     }
 }

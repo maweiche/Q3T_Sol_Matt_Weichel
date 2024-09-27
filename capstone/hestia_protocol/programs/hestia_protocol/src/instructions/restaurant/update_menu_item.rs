@@ -2,7 +2,7 @@ use anchor_lang::prelude::*;
 use crate::{state::{AdminProfile, MenuCategoryType, Menu, MenuItem, Restaurant}, errors::SetupError};
 
 #[derive(AnchorDeserialize, AnchorSerialize)]
-pub struct AddMenuItemArgs {
+pub struct UpdateMenuItemArgs {
     sku: String,
     category: u8,
     name: String,
@@ -13,20 +13,16 @@ pub struct AddMenuItemArgs {
 }
 
 #[derive(Accounts)]
-#[instruction(args: AddMenuItemArgs)]
-pub struct AddMenuItem<'info> {
+#[instruction(args: UpdateMenuItemArgs)]
+pub struct UpdateMenuItem<'info> {
     #[account(
-        init,
-        payer = restaurant_admin,
-        space = MenuItem::INIT_SPACE + args.sku.len() + args.name.len() + args.description.len() + (args.ingredients.len() * 8),
+        mut,
         seeds = [b"item", args.sku.as_bytes().as_ref()],
         bump,
     )] 
     pub item: Account<'info, MenuItem>,
     #[account(
-        init_if_needed,
-        payer = restaurant_admin,
-        space = Menu::INIT_SPACE,
+        mut,
         seeds = [b"menu", restaurant.key().as_ref()],
         bump,
     )]
@@ -45,17 +41,8 @@ pub struct AddMenuItem<'info> {
     pub system_program: Program<'info, System>,
 }
 
-impl<'info> AddMenuItem<'info> {
-    pub fn add_item(&mut self, category: MenuCategoryType, args: AddMenuItemArgs, item_bump: u8, menu_bump: u8) -> Result<()> {
-
-        if self.menu.initialized == false {
-            self.menu.set_inner(
-                Menu {
-                    bump: menu_bump,
-                    initialized: true,
-                }
-            );
-        }
+impl<'info> UpdateMenuItem<'info> {
+    pub fn update_item(&mut self, category: MenuCategoryType, args: UpdateMenuItemArgs, item_bump: u8, menu_bump: u8) -> Result<()> {
 
         self.item.set_inner(
             MenuItem {
@@ -74,7 +61,7 @@ impl<'info> AddMenuItem<'info> {
     }
 }
 
-pub fn handler(ctx: Context<AddMenuItem>, args: AddMenuItemArgs) -> Result<()> {
+pub fn handler(ctx: Context<UpdateMenuItem>, args: UpdateMenuItemArgs) -> Result<()> {
     let item_bump = ctx.bumps.item;
     let menu_bump = ctx.bumps.menu;
     let arguments = args;
@@ -89,7 +76,7 @@ pub fn handler(ctx: Context<AddMenuItem>, args: AddMenuItemArgs) -> Result<()> {
         _ => return Err(SetupError::InvalidObjectType.into()),
     };
 
-    ctx.accounts.add_item(menu_category_type, arguments, item_bump, menu_bump)?;
+    ctx.accounts.update_item(menu_category_type, arguments, item_bump, menu_bump)?;
 
     Ok(())
 }
